@@ -1,6 +1,6 @@
 import os
 from flask import render_template, request, flash, redirect, url_for
-from .forms import HiveForm, WeatherForm
+from .forms import HiveForm, InspectionForm, WeatherForm
 from .import bp as main
 from flask_login import login_required, current_user
 from app.models import User, Hive, Apiary
@@ -10,6 +10,19 @@ import requests
 @main.route('/', methods = ['GET'])
 def index():
     return render_template('index.html.j2')
+
+@main.route('/inspection', methods=['GET', 'POST'])
+@login_required
+def inspection():
+    form = InspectionForm()
+    if request.method == 'POST':
+
+        new_inspection_data={
+            "hive_name" : form.hive_name.data,
+            "inspect_date" : form.inspect_date.data,
+            
+        }
+
 
 @main.route('/hive', methods=['GET', 'POST'])
 @login_required
