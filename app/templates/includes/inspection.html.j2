@@ -18,25 +18,9 @@ Inspection Entry
     </div>
     <br>
     <div>
-        {{form.numOfDeeps.label(class="form-label")}}
-        {{form.numOfDeeps(class="form-control")}}
-        {% for error in form.numOfDeeps.errors %}
-            <small style="color:red;">{{error}}</small>
-        {% endfor %}
-    </div>
-    <br>
-    <div>
-        {{form.numOfMediums.label(class="form-label")}}
-        {{form.numOfMediums(class="form-control")}}
-        {% for error in form.numOfMediums.errors %}
-            <small style="color:red;">{{error}}</small>
-        {% endfor %}
-    </div>
-    <br>
-    <div>
-        {{form.numOfShallows.label(class="form-label")}}
-        {{form.numOfShallows(class="form-control")}}
-        {% for error in form.numOfShallows.errors %}
+        {{form.inspect_date.label(class="form-label")}}
+        {{form.inspect_date(class="form-control")}}
+        {% for error in form.inspect_date.errors %}
             <small style="color:red;">{{error}}</small>
         {% endfor %}
     </div>
