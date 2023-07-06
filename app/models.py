@@ -51,15 +51,37 @@ class User(UserMixin, db.Model):
         self.hive.remove(hive)
         db.session.commit()
 
+class Inspection(db.Model):
+    hive_id = db.Column(db.Integer, db.ForeignKey('hive.hive_id'))
+    inspect_date = db.Column(db.DateTime, nullable=False)
+    queen = db.Column(db.String)
+    health = db.Column(db.String)
+    temperment = db.Column(db.String)
+    notes = db.Column(db.Text)
+
+    def __repr__(self):
+        return f'<Inspection: {self.hive_id} | {self.inspect_date}>'
+
+    def hive_from_dict(self, inspection_data):
+        self.hive_name = inspection_data['hive_name']
+        self.queen = inspection_data['queen']
+        self.health = inspection_data['health']
+        self.temperment = inspection_data['temperment']
+        self.notes = inspection_data['notes']
+
+    def save(self):
+        db.session.add(self)
+        db.session.commit()
+
+
+
+
 class Hive(db.Model):
     hive_id = db.Column(db.Integer, primary_key=True)
     hive_name = db.Column(db.String)
     numOfDeeps = db.Column(db.String)
     numOfMediums = db.Column(db.String)
     numOfShallows = db.Column(db.String)
-    queen = db.Column(db.String)
-    health = db.Column(db.String)
-    temperment = db.Column(db.String)
     notes = db.Column(db.Text)
 
     def __repr__(self):
@@ -70,9 +92,6 @@ class Hive(db.Model):
         self.numOfDeeps = hive_data['numOfDeeps']
         self.numOfMediums = hive_data['numOfMediums']
         self.numOfShallows = hive_data['numOfShallows']
-        self.queen = hive_data['queen']
-        self.health = hive_data['health']
-        self.temperment = hive_data['temperment']
         self.notes = hive_data['notes']
 
     def save(self):
