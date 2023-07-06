@@ -3,7 +3,7 @@ from flask import render_template, request, flash, redirect, url_for
 from .forms import HiveForm, InspectionForm, WeatherForm
 from .import bp as main
 from flask_login import login_required, current_user
-from app.models import User, Hive, Apiary
+from app.models import User, Hive, Apiary, Inspection
 import requests
 
 
@@ -20,8 +20,35 @@ def inspection():
         new_inspection_data={
             "hive_name" : form.hive_name.data,
             "inspect_date" : form.inspect_date.data,
-            
+            "queen" : form.queen.data,
+            "health" : form.health.data,
+            "temperment" : form.temperment.data,
+            "notes" : form.notes.data
         }
+
+        new_inspection_object = Inspection()
+        new_inspection_object.inspection_from_dict(new_inspection_data)
+        new_inspection_object.save()
+
+        inspections=''
+        my_hive_names=[]
+        inspection_list=[]
+        for entry in my_inspections:
+            i=Inspection.query.filter_by(hive_id=entry.hive_id).first().hive_name
+            my_inspections.append(i)
+
+    #    if new_inspection_object.hive_name in my_hive_names:
+    #        flash(f'You already have a hive by this name/id.  Please choose another.', 'danger')
+    #    else:
+    #        flash(f'Hive information saved.', 'success')
+    #        current_user.add_hive(new_hive_object)
+
+    #    hives = current_user.hive.all()
+    #    hive_list = hives
+
+        return render_template('inspection.html.j2', inspections=inspection_list, form=form)
+    return render_template('inspection.html.j2', form=form)
+
 
 
 @main.route('/hive', methods=['GET', 'POST'])
@@ -35,9 +62,6 @@ def hive():
             "numOfDeeps" : form.numOfDeeps.data,
             "numOfMediums" : form.numOfMediums.data,
             "numOfShallows" : form.numOfShallows.data,
-            "queen" : form.queen.data,
-            "health" : form.health.data,
-            "temperment" : form.temperment.data,
             "notes" : form.notes.data
         }
 
