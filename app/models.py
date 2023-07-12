@@ -52,6 +52,7 @@ class User(UserMixin, db.Model):
         db.session.commit()
 
 class Inspection(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     hive_id = db.Column(db.Integer, db.ForeignKey('hive.hive_id'))
     inspect_date = db.Column(db.DateTime, nullable=False)
     queen = db.Column(db.String)
@@ -62,7 +63,7 @@ class Inspection(db.Model):
     def __repr__(self):
         return f'<Inspection: {self.hive_id} | {self.inspect_date}>'
 
-    def hive_from_dict(self, inspection_data):
+    def inspection_from_dict(self, inspection_data):
         self.hive_name = inspection_data['hive_name']
         self.queen = inspection_data['queen']
         self.health = inspection_data['health']
