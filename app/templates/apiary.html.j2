@@ -14,7 +14,7 @@ Apiary
     </div>
     <table class="table table-borderless" style="text-align: left; width: 75%; margin:5px auto;">
       <tbody>
-      <tr>
+<!--      <tr>
         <td scope="col">Queen Status: </td>
         <td>{{hiv.queen}}</td>
       </tr>
@@ -25,7 +25,7 @@ Apiary
       <tr>
         <td scope="col">Temperment:</td>
         <td>{{hiv.temperment}}</td>
-      </tr>
+      </tr>  -->
       <tr>
         <td scope="col">Num of Deep Boxes:</td>
         <td>{{hiv.numOfDeeps}}</td>
@@ -45,6 +45,9 @@ Apiary
       </tbody>
     </table>
 
+    <div class="card-body">
+      <a href="{{url_for('main.inspection', id=hiv.hive_id)}}" class="card-link">Inspect</a>
+    </div>
     <div class="card-body">
       <a href="{{url_for('main.remove_hive', id=hiv.hive_id)}}" class="card-link">Delete</a>
     </div>
